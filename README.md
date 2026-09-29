@@ -1,4 +1,6 @@
-# MCP Hub 데모
+# Demo_MCP_HUB
+
+MCP HUB 만들고 있는거 안보여주기 아까워서 만듬
 
 [MCP Hub](https://github.com/syndgo-byte/Main_MCP_Hub)의 동작 영상입니다. 노드 캔버스에서 시작해 3D 관제판(야간, 주간), 보안 진단까지 이어집니다.
 
