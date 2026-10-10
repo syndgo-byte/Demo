@@ -2,15 +2,16 @@
 
 직접 만든 서비스들의 동작 영상 모음입니다.
 
-마지막 업데이트: 2026-10-04 11:31 (Asia/Seoul)
+마지막 업데이트: 2026-10-10 04:26 (Asia/Seoul)
 
 | 영상 | 서비스 | 길이 |
 | --- | --- | --- |
 | [MCP_HUB_DEMO.mp4](MCP_HUB_DEMO.mp4) | [MCP Hub](https://github.com/syndgo-byte/Main_MCP_Hub): 서비스 연결 · 계통도 · 3D 관제 · 관리 서비스 | 2:25 |
 | [EMSv3_DEMO.mp4](EMSv3_DEMO.mp4) | [EMS v3](https://github.com/syndgo-byte/EMS): 공사 설계 · 물량 산출 · 엑셀 설계서 · 설계 변경 비교 · 준공 관리 | 2:19 |
 | [EMSv3_3D_DEMO.mp4](EMSv3_3D_DEMO.mp4) | [EMS v3](https://github.com/syndgo-byte/EMS) 3D 시설 도면: examples 폴더 예제 도면을 하나씩 불러오기 | 2:40 |
+| [NMS_DEMO.mp4](NMS_DEMO.mp4) | [NMS Portal](https://github.com/syndgo-byte/Security_NMS): 계정 · ACL · 관제 화면 승인 · 전체화면 감시 | 1:41 |
 
-[PREVIEW.html](PREVIEW.html)을 로컬 브라우저로 열면 세 영상을 한 화면에서 재생할 수 있습니다. 영상은 1280×720, 30fps, H.264 MP4이며 음성은 없습니다.
+[PREVIEW.html](PREVIEW.html)을 로컬 브라우저로 열면 네 영상을 한 화면에서 재생할 수 있습니다. 영상은 1280×720, 30fps, H.264 MP4이며 음성은 없습니다.
 
 최신 로컬 소스를 복사한 별도 시연 환경에서 녹화했습니다. 계정·설계 변경·민원·테스트 모듈 장애 이벤트는 시연 데이터입니다. 운영 DB와 원본 서비스 코드는 변경하지 않았습니다. CAD 변환 완료를 확인하고 긴 처리 대기는 편집에서 줄였습니다.
 
@@ -90,3 +91,22 @@
 | 04 건물 3D (GIS) | `gis/sample_buildings_virtual.zip` | SHP 묶음 ZIP의 가상 건물 504동(최고 132.2 m)을 높이별 색상 · 높이 근거별로 입체 표시 |
 
 예제 폴더의 `datacenter.glb` · `.ifc` · `.step` · `.iges` 등은 선택 패키지(`requirements-cad.txt`: trimesh, ifcopenshell, OCP)가 있어야 서버에서 변환되므로 이 영상에서는 빼고, 추가 설치 없이 열리는 JSON · DXF · GIS 예제만 담았습니다.
+
+## NMS Portal
+
+### [NMS_DEMO.mp4 다운로드해서 보기](NMS_DEMO.mp4)
+
+폐쇄망 관제 환경을 위한 보안 포털입니다. 허용된 IP · 단말의 계정만 승인된 관제 화면을 열 수 있고, 관제 창이 전체화면으로 유지되는 동안에만 화면 꺼짐을 막습니다.
+
+| 구간 | 내용 |
+| --- | --- |
+| 오프닝 | NMS Portal 소개 카드, 계정 · ACL · 관제 화면 승인 · 전체화면 감시 키워드 |
+| 00 로그인 · 계정 복구 | 아이디 찾기·비밀번호 재설정 화면, 비밀번호를 RSA-OAEP + AES-256-GCM 봉투로 암호화해 전송 |
+| 01 대시보드 | 접속 IP와 단말 인가 상태, 등록된 계정과 관제 화면 목록 |
+| 02 계정 · 화면 등록 | 사번 · 허용 IP 대역 · 역할로 계정 등록 (PBKDF2 60만 회 해시), 관제 화면 URL 등록, 화면별 ACL |
+| 03 관제 | 관제 시작 → 컨트롤 창 → 관제 대상 창, 포털 하단 상태 바에 준비 · 유지 · 이탈 상태 표시 |
+| 04 전체화면 감시 | Windows 네이티브 감시 배너 (기존 실제 세션 캡처): F11 → Ctrl+Shift+M 안내, 관제 유지 중, 이탈 후 20초 카운트다운 |
+
+영상의 관제 대상 화면은 시연용 모의 NOC 대시보드입니다. 네이티브 감시 배너는 데스크톱에 직접 뜨는 창이라 브라우저 녹화에 잡히지 않아서, 기존 실제 세션에서 찍은 캡처를 재사용해 보여 줍니다. 브라우저 녹화 중 네이티브 감시 API는 모의 응답을 사용했습니다.
+
+기술: Python (http.server, ssl, cryptography, ctypes · Win32 API), Web Crypto API
